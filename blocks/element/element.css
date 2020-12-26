@@ -1,5 +1,17 @@
 .element {
-  height: 361px;
+  width: 32%;
   background-color: white;
   border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .element {
+    width: 49%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .element {
+    width: 100%;
+  }
 }

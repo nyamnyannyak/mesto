@@ -1,7 +1,19 @@
 .elements {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 282px);
-  grid-gap: 20px 17px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 880px;
   margin: 0 auto;
-  justify-content: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .elements {
+    width: 87%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .elements {
+    width: 88.125%;
+  }
 }
