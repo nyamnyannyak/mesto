@@ -8,4 +8,4 @@
 * попап-форма, через которую можно редактировать профиль
 
 
-Ссылка на проект: https://students-yandex.github.io/russian-travel/index.html 
+Ссылка на проект: https://nyamnyannyak.github.io/mesto/index.html
