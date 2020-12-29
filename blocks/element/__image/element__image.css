@@ -1,3 +1,9 @@
 .element__image {
   width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  object-fit: cover;
+  height: 100%;
 }
+

@@ -1,0 +1,5 @@
+.element__image-wrapper {
+  padding-bottom: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
