@@ -11,30 +11,21 @@ let jobInput = formElement.querySelector('.popup__field_content_job');
 function togglePopup () {
   popup.classList.toggle ('popup_opened');
 }
+
 function openPopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   togglePopup ();
 }
 
+function handleFormSubmit (evt) {
+    evt.preventDefault(); 
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
+    togglePopup ();
+}
+
 editButton.addEventListener('click', openPopup); 
 closeButton.addEventListener('click', togglePopup); 
 
-
-
-
-
-
-
-
-
-function handleFormSubmit (evt) {
-    evt.preventDefault(); 
-    profileName.textContent = nameInput.value
-    profileJob.textContent = jobInput.value
-}
-
-
 formElement.addEventListener('submit', handleFormSubmit);
-
-formElement.addEventListener('submit', togglePopup);
