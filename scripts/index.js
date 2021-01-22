@@ -7,7 +7,9 @@ const profileJob = document.querySelector('.profile__description');
 const profileFormElement = editPopup.querySelector('.popup__form');
 const nameInput = profileFormElement.querySelector('.popup__field_content_name');
 const jobInput = profileFormElement.querySelector('.popup__field_content_job');
-
+const cardFormElement = addPopup.querySelector('.popup__form');
+const placeInput = cardFormElement.querySelector('.popup__field_content_place');
+const urlInput = cardFormElement.querySelector('.popup__field_content_url');
 const initialCards = [
   {
     name: 'Архыз',
@@ -79,6 +81,18 @@ function renderElement(name, link) {
   document.querySelector('.elements').prepend(element); 
 } 
 
+function handleAddFormSubmit (evt) {
+  evt.preventDefault(); 
+  renderElement(placeInput.value, urlInput.value);
+  togglePopup (addPopup);
+  resetForm ();
+}
 
+function resetForm () {
+  placeInput.value = "";
+  urlInput.value = "";
+}
+
+cardFormElement.addEventListener('submit', handleAddFormSubmit);
 
 render();
