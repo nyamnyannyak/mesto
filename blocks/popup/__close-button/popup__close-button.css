@@ -6,7 +6,7 @@
   cursor: pointer;
   width: 40px;
   height: 40px;
-  background-size: contain;
+
   position: absolute;
   top: -38px;
   right: -38px;
@@ -20,6 +20,10 @@
 
 @media screen and (max-width: 500px) {
   .popup__close-button {
+    background-size: contain;
+    width: 35px;
+    height: 35px;
+    top: -47px;
     right: 0;
     width: 26px;
     height: 26px;

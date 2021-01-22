@@ -1,6 +1,7 @@
 const editButton = document.querySelector('.profile__edit-button');
 const editPopup = document.querySelector('.popup_type_edit');
-const closeProfileButton = editPopup.querySelector('.popup__close-button');
+const addPopup = document.querySelector('.popup_type_add');
+const addButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
 const profileFormElement = editPopup.querySelector('.popup__form');
@@ -53,7 +54,9 @@ function handleEditFormSubmit (evt) {
 }
 
 editButton.addEventListener('click', openEditPopup); 
-closeProfileButton.addEventListener('click', () => togglePopup(editPopup)); 
+editPopup.querySelector('.popup__close-button').addEventListener('click', () => togglePopup(editPopup)); 
+addButton.addEventListener('click', () => togglePopup(addPopup)); 
+addPopup.querySelector('.popup__close-button').addEventListener('click', () => togglePopup(addPopup)); 
 
 profileFormElement.addEventListener('submit', handleEditFormSubmit);
 
