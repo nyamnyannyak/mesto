@@ -10,6 +10,8 @@ const jobInput = profileFormElement.querySelector('.popup__field_content_job');
 const cardFormElement = addPopup.querySelector('.popup__form');
 const placeInput = cardFormElement.querySelector('.popup__field_content_place');
 const urlInput = cardFormElement.querySelector('.popup__field_content_url');
+
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -71,6 +73,9 @@ function render() {
 function createElement(name, link) {
   const elementTemplate = document.querySelector('#element-template').content;
   const galleryElement = elementTemplate.cloneNode(true);
+  galleryElement.querySelector('.element__like-button').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like-button_active'); 
+  })
   galleryElement.querySelector('.element__image').src = link;
   galleryElement.querySelector('.element__text').textContent = name; 
   return galleryElement;
@@ -96,3 +101,4 @@ function resetForm () {
 cardFormElement.addEventListener('submit', handleAddFormSubmit);
 
 render();
+
