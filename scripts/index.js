@@ -76,6 +76,7 @@ function createElement(name, link) {
   galleryElement.querySelector('.element__like-button').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like-button_active'); 
   })
+  galleryElement.querySelector('.element__delete-button').addEventListener('click', handleDelete);
   galleryElement.querySelector('.element__image').src = link;
   galleryElement.querySelector('.element__text').textContent = name; 
   return galleryElement;
@@ -91,6 +92,10 @@ function handleAddFormSubmit (evt) {
   renderElement(placeInput.value, urlInput.value);
   togglePopup (addPopup);
   resetForm ();
+}
+
+function handleDelete(evt) {
+  evt.target.closest('.element').remove();
 }
 
 function resetForm () {
