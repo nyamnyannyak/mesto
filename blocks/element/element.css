@@ -1,15 +1,8 @@
 .element {
-  width: 32%;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-}
-
-@media screen and (max-width: 768px) {
-  .element {
-    width: 49%;
-  }
 }
 
 @media screen and (max-width: 550px) {
