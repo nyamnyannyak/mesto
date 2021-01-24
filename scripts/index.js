@@ -10,7 +10,7 @@ const jobInput = profileFormElement.querySelector('.popup__field_content_job');
 const cardFormElement = addPopup.querySelector('.popup__form');
 const placeInput = cardFormElement.querySelector('.popup__field_content_place');
 const urlInput = cardFormElement.querySelector('.popup__field_content_url');
-
+const photoPopup = document.querySelector('.photo-popup');
 
 const initialCards = [
   {
@@ -79,6 +79,7 @@ function createElement(name, link) {
   galleryElement.querySelector('.element__delete-button').addEventListener('click', handleDelete);
   galleryElement.querySelector('.element__image').src = link;
   galleryElement.querySelector('.element__text').textContent = name; 
+  galleryElement.querySelector('.element__image').addEventListener('click', openPhotoPopup);
   return galleryElement;
 }
 
@@ -102,6 +103,18 @@ function resetForm () {
   placeInput.value = "";
   urlInput.value = "";
 }
+
+function togglePhotoPopup () {
+  photoPopup.classList.toggle ('photo-popup_opened');
+}
+
+function openPhotoPopup (evt) {
+  togglePhotoPopup ();
+  photoPopup.querySelector('.photo-popup__image').src = evt.target.src;
+  photoPopup.querySelector('.photo-popup__text').textContent = evt.target.parentElement.querySelector('.element__text').textContent;
+}
+
+photoPopup.querySelector('.close-button').addEventListener('click', togglePhotoPopup); 
 
 cardFormElement.addEventListener('submit', handleAddFormSubmit);
 
