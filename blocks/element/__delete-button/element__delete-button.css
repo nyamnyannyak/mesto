@@ -9,3 +9,7 @@
   width: 18px;
   height: 19.3px;
 }
+
+.element__delete-button:hover{
+  opacity: 0.6;
+}
