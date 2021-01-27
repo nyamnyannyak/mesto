@@ -1,4 +1,4 @@
-.photo-popup_opened {
+.opened-popup {
   display: flex;
   visibility: visible;
   opacity: 1;
