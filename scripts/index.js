@@ -16,7 +16,8 @@ const editPopupCloseButton = editPopup.querySelector('.popup__close-button');
 const addButton = document.querySelector('.profile__add-button');
 const addPopupCloseButton = addPopup.querySelector('.popup__close-button');
 const photoPopupCloseButton = photoPopup.querySelector('.close-button');
-
+const photoPopupImage = photoPopup.querySelector('.photo-popup__image');
+const photoPopupText = photoPopup.querySelector('.photo-popup__text');
 
 
 function closePopup (popup) {
@@ -42,19 +43,22 @@ function handleEditFormSubmit (evt) {
 
 function render() {
   initialCards.forEach((item) => {
-    renderElement(item)
+    renderElement(item, elements)
   });
 }
 
 function createElement(item) {
   const galleryElement = elementTemplate.cloneNode(true);
-  const galleryImage = galleryElement.querySelector('.element__image');
-  galleryElement.querySelector('.element__like-button').addEventListener('click', handleLikeClick)
-  galleryElement.querySelector('.element__delete-button').addEventListener('click', handleDelete);
-  galleryImage.src = item.link;
-  galleryImage.alt = `Фото "${name}"`
-  galleryElement.querySelector('.element__text').textContent = item.name; 
-  galleryImage.addEventListener('click', () => openPhotoPopup(item));
+  const cardImage = galleryElement.querySelector('.element__image');
+  const cardText = galleryElement.querySelector('.element__text');
+  const likeButton = galleryElement.querySelector('.element__like-button');
+  const deleteButton = galleryElement.querySelector('.element__delete-button');
+  cardImage.src = item.link;
+  cardImage.alt = `Фото "${name}"`;
+  cardText.textContent = item.name; 
+  likeButton.addEventListener('click', handleLikeClick);
+  deleteButton.addEventListener('click', handleDelete);
+  cardImage.addEventListener('click', () => openPhotoPopup(item));
   return galleryElement;
 }
 
@@ -62,9 +66,9 @@ function handleLikeClick (evt) {
   evt.target.classList.toggle('element__like-button_active'); 
 }
 
-function renderElement(item) {
+function renderElement(item, section) {
   const element = createElement(item);
-  elements.prepend(element); 
+  section.prepend(element); 
 } 
 
 function handleAddFormSubmit (evt) {
@@ -73,8 +77,8 @@ function handleAddFormSubmit (evt) {
     name: placeInput.value,
     link: urlInput.value,
   };
-  renderElement(item);
-  closrPopup (addPopup);
+  renderElement(item, elements);
+  closePopup (addPopup);
   addFormElement.reset();
 }
 
@@ -82,12 +86,10 @@ function handleDelete(evt) {
   evt.target.closest('.element').remove();
 }
 
-
 function openPhotoPopup (item) {
-  const popupImage = photoPopup.querySelector('.photo-popup__image');
-  popupImage.src = item.link;
-  popupImage.alt = item.name;
-  photoPopup.querySelector('.photo-popup__text').textContent = item.name;
+  photoPopupImage.src = item.link;
+  photoPopupImage.alt = item.name;
+  photoPopupText.textContent = item.name;
   openPopup (photoPopup);
 }
 
