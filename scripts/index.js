@@ -18,14 +18,18 @@ const addPopupCloseButton = addPopup.querySelector('.popup__close-button');
 const photoPopupCloseButton = photoPopup.querySelector('.close-button');
 const photoPopupImage = photoPopup.querySelector('.photo-popup__image');
 const photoPopupText = photoPopup.querySelector('.photo-popup__text');
+const createCardButton = addPopup.querySelector('.popup__save-button');
 
 
 function closePopup (popup) {
   popup.classList.remove ('opened-popup');
+  document.removeEventListener('keydown', (evt) => handleEscPress (evt, popup));
 }
 
 function openPopup (popup) {
   popup.classList.add ('opened-popup');
+  document.addEventListener('keydown', (evt) => handleEscPress (evt, popup));
+
 }
 
 function openEditPopup () {
@@ -84,7 +88,7 @@ function handleAddFormSubmit (evt) {
   };
   renderElement(item, elements);
   closePopup (addPopup);
-  addFormElement.reset();
+  createCardButton.classList.add('popup__save-button_disabled');
 }
 
 function handleDelete(evt) {
@@ -110,6 +114,12 @@ function handleOverlayClick (evt, popup) {
   if (evt.target === evt.currentTarget) {
     closePopup(popup);
   }
+}
+
+function handleEscPress (evt, popup) {
+    if (evt.keyCode == 27) {
+      closePopup (popup);
+    }
 }
 
 editPopup.addEventListener('click', (evt) => handleOverlayClick (evt, editPopup));
