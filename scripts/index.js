@@ -106,6 +106,15 @@ function openAddPopup () {
   });
 }
 
+function handleOverlayClick (evt, popup) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(popup);
+  }
+}
+
+editPopup.addEventListener('click', (evt) => handleOverlayClick (evt, editPopup));
+addPopup.addEventListener('click', (evt) => handleOverlayClick (evt, addPopup));
+photoPopup.addEventListener('click', (evt) => handleOverlayClick (evt, photoPopup));
 editButton.addEventListener('click', openEditPopup); 
 editPopupCloseButton.addEventListener('click', () => closePopup(editPopup)); 
 addButton.addEventListener('click', openAddPopup); 
