@@ -31,6 +31,11 @@ function openPopup (popup) {
 function openEditPopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
+  const inputList = Array.from(profileFormElement.querySelectorAll('.popup__input'));
+  const buttonElement = profileFormElement.querySelector('.popup__save-button');
+  inputList.forEach((inputElement) => {
+    updateFormValidity(profileFormElement, inputElement, inputList, buttonElement);
+  });
   openPopup (editPopup);
 }
 
@@ -93,9 +98,17 @@ function openPhotoPopup (item) {
   openPopup (photoPopup);
 }
 
+function openAddPopup () {
+  openPopup(addPopup);
+  addFormElement.reset();
+  Array.from(addFormElement.querySelectorAll('.popup__input')).forEach((inputElement) => {
+    hideInputError (addFormElement, inputElement)
+  });
+}
+
 editButton.addEventListener('click', openEditPopup); 
 editPopupCloseButton.addEventListener('click', () => closePopup(editPopup)); 
-addButton.addEventListener('click', () => openPopup(addPopup)); 
+addButton.addEventListener('click', openAddPopup); 
 addPopupCloseButton.addEventListener('click', () => closePopup(addPopup)); 
 profileFormElement.addEventListener('submit', handleEditFormSubmit);
 photoPopupCloseButton.addEventListener('click', () => closePopup(photoPopup)); 

@@ -31,6 +31,7 @@
 @import url('../blocks/popup/__input/_content/popup__input_content_job.css');
 @import url('../blocks/popup/__input/_content/popup__input_content_name.css');
 @import url('../blocks/popup/__input-error/popup__input-error.css');
+@import url('../blocks/popup/__input-error/_visible/popup__input-error_visible.css');
 @import url('../blocks/popup/__input/_type/popup__input_type_error.css');
 @import url('../blocks/popup/__input-container/popup__input-container.css');
 @import url('../blocks/popup/__save-button/popup__save-button.css');
