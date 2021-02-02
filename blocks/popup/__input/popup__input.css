@@ -1,4 +1,4 @@
-.popup__field {
+.popup__input {
   font-family: inherit;
   border: 0;
   border-bottom: 1px solid rgba(0,0,0,0.2);
@@ -6,14 +6,14 @@
   font-size: 14px;
   line-height: 17px;
   padding: 0 0 10px 0;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 
-.popup__field:focus {
+.popup__input:focus {
   outline: none;
 }
 
-.popup__field::placeholder {
+.popup__input::placeholder {
   font-size: 14px;
   line-height: 17px;
   color: #C4C4C4;

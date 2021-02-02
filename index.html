@@ -36,8 +36,14 @@
         <div class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="popup__form" name="profile-form">
-            <input class="popup__field popup__field_content_name" type="text" name="name-field"> 
-            <input class="popup__field popup__field_content_job" type="text" name="job-field"> 
+            <div class ="popup__input-container">
+              <input id="name-input" class="popup__input popup__input_type_error popup__input_content_name" type="text" name="name-input">
+              <span class="name-input-error popup__input-error">Ошибочка!</span>
+            </div>
+            <div class ="popup__input-container">
+              <input id="job-input" class="popup__input popup__input_content_job" type="text" name="job-input"> 
+              <span class="job-input-error popup__input-error"></span> 
+            </div>
             <input class="popup__save-button" type="submit" value="Сохранить" name="save-button"> 
           </form>
           <button class="popup__close-button close-button" type="button"></button>
@@ -47,10 +53,16 @@
         <div class="popup__container">
           <h2 class="popup__title">Новое место</h2>
           <form class="popup__form" name="card-form">
-            <input class="popup__field popup__field_content_place" type="text" 
-            name="place-field" placeholder="Название"> 
-            <input class="popup__field popup__field_content_url" type="url" 
-            name="url-field" placeholder="Ссылка на картинку"> 
+            <div class ="popup__input-container">
+              <input id="place-input" class="popup__input popup__input_content_place" type="text" 
+              name="place-input" placeholder="Название"> 
+              <span class="place-input-error popup__input-error"></span>
+            </div>
+            <div class ="popup__input-container">
+              <input id="url-input"class="popup__input popup__input_content_url" type="url" 
+              name="url-input" placeholder="Ссылка на картинку"> 
+              <span class="url-input-error popup__input-error"></span>
+            </div>
             <input class="popup__save-button" type="submit" value="Создать" name="save-button"> 
           </form>
           <button class="popup__close-button close-button" type="button"></button>
