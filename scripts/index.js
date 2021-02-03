@@ -28,8 +28,7 @@ function closePopup (popup) {
 
 function openPopup (popup) {
   popup.classList.add ('opened-popup');
-  document.addEventListener('keydown', (evt) => handleEscPress (evt, popup));
-
+  setPopupListeners (popup);
 }
 
 function openEditPopup () {
@@ -89,6 +88,7 @@ function handleAddFormSubmit (evt) {
   renderElement(item, elements);
   closePopup (addPopup);
   createCardButton.classList.add('popup__save-button_disabled');
+  createCardButton.setAttribute("disabled", "true");
 }
 
 function handleDelete(evt) {
@@ -122,15 +122,15 @@ function handleEscPress (evt, popup) {
     }
 }
 
-editPopup.addEventListener('click', (evt) => handleOverlayClick (evt, editPopup));
-addPopup.addEventListener('click', (evt) => handleOverlayClick (evt, addPopup));
-photoPopup.addEventListener('click', (evt) => handleOverlayClick (evt, photoPopup));
+function setPopupListeners (popup) {
+  document.addEventListener('keydown', (evt) => handleEscPress (evt, popup));
+  popup.addEventListener('click', (evt) => handleOverlayClick (evt, popup));
+  popup.querySelector('.close-button').addEventListener('click', () => closePopup(popup)); 
+}
+
 editButton.addEventListener('click', openEditPopup); 
-editPopupCloseButton.addEventListener('click', () => closePopup(editPopup)); 
 addButton.addEventListener('click', openAddPopup); 
-addPopupCloseButton.addEventListener('click', () => closePopup(addPopup)); 
 profileFormElement.addEventListener('submit', handleEditFormSubmit);
-photoPopupCloseButton.addEventListener('click', () => closePopup(photoPopup)); 
 addFormElement.addEventListener('submit', handleAddFormSubmit);
 
 render();
