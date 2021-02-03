@@ -95,7 +95,7 @@ function createElement(item) {
   const likeButton = galleryElement.querySelector('.element__like-button');
   const deleteButton = galleryElement.querySelector('.element__delete-button');
   cardImage.src = item.link;
-  cardImage.alt = `Фото "${name}"`;
+  cardImage.alt = `Фото "${item.name}"`;
   cardText.textContent = item.name; 
   likeButton.addEventListener('click', handleLikeClick);
   deleteButton.addEventListener('click', handleDelete);
