@@ -20,6 +20,7 @@ const photoPopupImage = photoPopup.querySelector('.photo-popup__image');
 const photoPopupText = photoPopup.querySelector('.photo-popup__text');
 const createCardButton = addFormElement.querySelector('.popup__save-button');
 const profileSaveButton = profileFormElement.querySelector('.popup__save-button');
+const inactiveButtonSelector = 'popup__save-button_disabled';
 
 function closePopup (popup) {
   popup.classList.remove ('opened-popup');
@@ -47,8 +48,7 @@ function openEditPopup () {
 
 function resetEditForm () {
   removeInputErrors (profileFormElement);
-  profileSaveButton.classList.remove('popup__save-button_disabled');
-  profileSaveButton.removeAttribute("disabled");
+  makeButtonActive (profileSaveButton, inactiveButtonSelector);
 }
 
 function openAddPopup () {
@@ -58,18 +58,8 @@ function openAddPopup () {
 
 function resetAddForm () {
   removeInputErrors (addFormElement);
-  createCardButton.classList.add('popup__save-button_disabled');
-  createCardButton.setAttribute("disabled", "true");
+  makeButtonDisabled (createCardButton, inactiveButtonSelector);
   addFormElement.reset();
-}
-
-function removeInputErrors (formElement) {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-  inputList.forEach((inputElement) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove('popup__input_type_error');
-    errorElement.classList.remove('popup__input-error_visible');
-  })
 }
 
 function handleEditFormSubmit (evt) {
