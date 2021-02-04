@@ -21,17 +21,14 @@ const photoPopupText = photoPopup.querySelector('.photo-popup__text');
 const createCardButton = addFormElement.querySelector('.popup__save-button');
 const profileSaveButton = profileFormElement.querySelector('.popup__save-button');
 
-nameInput.value = profileName.textContent;
-jobInput.value = profileJob.textContent;
-
 function closePopup (popup) {
   popup.classList.remove ('opened-popup');
-  document.removeEventListener('keydown', (evt) => handleEscPress (evt, popup));
+  document.removeEventListener('keydown', handleEscPress);
 }
 
 function openPopup (popup) {
   popup.classList.add ('opened-popup');
-  setPopupListeners (popup);
+  document.addEventListener('keydown', handleEscPress);
 }
 
 function openPhotoPopup (item) {
@@ -133,14 +130,14 @@ function handleOverlayClick (evt, popup) {
   }
 }
 
-function handleEscPress (evt, popup) {
-    if (evt.keyCode == 27) {
-      closePopup (popup);
+function handleEscPress (evt) {
+    const openedPopup = document.querySelector('.opened-popup');
+    if (evt.keyCode === 27) {
+      closePopup (openedPopup);
     }
 }
 
 function setPopupListeners (popup) {
-  document.addEventListener('keydown', (evt) => handleEscPress (evt, popup));
   popup.addEventListener('click', (evt) => handleOverlayClick (evt, popup));
   popup.querySelector('.close-button').addEventListener('click', () => closePopup(popup)); 
 }
@@ -149,6 +146,9 @@ editButton.addEventListener('click', openEditPopup);
 addButton.addEventListener('click', openAddPopup); 
 profileFormElement.addEventListener('submit', handleEditFormSubmit);
 addFormElement.addEventListener('submit', handleAddFormSubmit);
+setPopupListeners (addPopup);
+setPopupListeners (editPopup);
+setPopupListeners (photoPopup);
 
 render();
 
