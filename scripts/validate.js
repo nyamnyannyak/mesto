@@ -1,18 +1,16 @@
-const profileButton = document.querySelector('.profile__edit-button');
-
 function showInputError (formElement, inputElement, errorMessage, selectors) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(selectors.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(selectors.errorClass);
-};
+}
 
 function hideInputError (formElement, inputElement, selectors) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(selectors.inputErrorClass);
   errorElement.classList.remove(selectors.errorClass);
   errorElement.textContent = '';
-};
+}
 
 function checkInputValidity (formElement, inputElement, selectors) {
   if (!inputElement.validity.valid) {
@@ -20,13 +18,13 @@ function checkInputValidity (formElement, inputElement, selectors) {
   } else {
     hideInputError(formElement, inputElement, selectors);
   }
-};
+}
 
 function hasInvalidInput (inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
-};
+}
 
 function makeButtonDisabled (buttonElement, inactiveSelector) {
   buttonElement.classList.add(inactiveSelector);
@@ -44,7 +42,7 @@ function toggleButtonState (inputList, buttonElement, selectors) {
   } else {
     makeButtonActive (buttonElement, selectors.inactiveButtonClass)
   }
-};
+}
 
 function setEventListeners (formElement, selectors) {
   const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
@@ -68,7 +66,7 @@ function enableValidation (selectors) {
     });
     setEventListeners(formElement, selectors);
   });
-};
+}
 
 function removeInputErrors (formElement) {
   const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
