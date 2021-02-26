@@ -10,7 +10,6 @@ const addFormElement = addPopup.querySelector('.popup__form');
 const placeInput = addFormElement.querySelector('.popup__input_content_place');
 const urlInput = addFormElement.querySelector('.popup__input_content_url');
 const photoPopup = document.querySelector('.photo-popup');
-const elementTemplate = document.querySelector('#element-template').content;
 const elements = document.querySelector('.elements');
 const editPopupCloseButton = editPopup.querySelector('.popup__close-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -22,6 +21,65 @@ const createCardButton = addFormElement.querySelector('.popup__save-button');
 const profileSaveButton = profileFormElement.querySelector('.popup__save-button');
 const inactiveButtonSelector = 'popup__save-button_disabled';
 
+class Card {
+	constructor(data, cardSelector) {
+    this._cardSelector = cardSelector;
+    this._name = data.name;
+		this._link = data.link;
+	}
+
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this._cardSelector)
+      .content
+      .querySelector('.element')
+      .cloneNode(true);
+    return cardElement;
+  }
+  
+  generateCard() {
+    this._element = this._getTemplate();
+    this._setEventListeners();
+
+    this._element.querySelector('.element__image').src = this._link;
+    this._element.querySelector('.element__text').textContent = this._name;
+    this._element.querySelector('.element__image').alt = `Фото "${this._name}"`;
+
+    return this._element;
+  }
+
+  _setEventListeners() {
+    this._element.querySelector('.element__like-button').addEventListener('click', () => {
+      this._handleLikeClick();
+    });
+		this._element.querySelector('.element__delete-button').addEventListener('click', () => {
+      this._handleDelete()
+    });
+    this._element.querySelector('.element__image').addEventListener('click', () => {
+      openPhotoPopup(this._name, this._link)
+    });
+	}
+  
+  _handleLikeClick() {
+    this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active'); 
+  }
+  
+  _handleDelete() {
+    this._element.remove();
+  }
+}
+
+function renderElement(item) {
+  const card = new Card(item, '#element-template')
+  const cardElement = card.generateCard();
+  
+	elements.prepend(cardElement); 
+}
+
+initialCards.forEach((item) => {
+  renderElement(item)
+});
+
 function closePopup (popup) {
   popup.classList.remove ('opened-popup');
   document.removeEventListener('keydown', handleEscPress);
@@ -32,10 +90,10 @@ function openPopup (popup) {
   document.addEventListener('keydown', handleEscPress);
 }
 
-function openPhotoPopup (item) {
-  photoPopupImage.src = item.link;
-  photoPopupImage.alt = item.name;
-  photoPopupText.textContent = item.name;
+function openPhotoPopup (name, link) {
+  photoPopupImage.src = link;
+  photoPopupImage.alt = name;
+  photoPopupText.textContent = name;
   openPopup (photoPopup);
 }
 
@@ -69,50 +127,19 @@ function handleEditFormSubmit (evt) {
     closePopup (editPopup);
 }
 
-function render() {
-  initialCards.forEach((item) => {
-    renderElement(item, elements)
-  });
-}
-
-function createElement(item) {
-  const galleryElement = elementTemplate.cloneNode(true);
-  const cardImage = galleryElement.querySelector('.element__image');
-  const cardText = galleryElement.querySelector('.element__text');
-  const likeButton = galleryElement.querySelector('.element__like-button');
-  const deleteButton = galleryElement.querySelector('.element__delete-button');
-  cardImage.src = item.link;
-  cardImage.alt = `Фото "${item.name}"`;
-  cardText.textContent = item.name; 
-  likeButton.addEventListener('click', handleLikeClick);
-  deleteButton.addEventListener('click', handleDelete);
-  cardImage.addEventListener('click', () => openPhotoPopup(item));
-  return galleryElement;
-}
-
-function renderElement(item, section) {
-  const element = createElement(item);
-  section.prepend(element); 
-} 
-
-function handleLikeClick (evt) {
-  evt.target.classList.toggle('element__like-button_active'); 
-}
-
 function handleAddFormSubmit (evt) {
   evt.preventDefault();
   const item = {
     name: placeInput.value,
     link: urlInput.value,
   };
-  renderElement(item, elements);
+  renderElement(item);
   closePopup (addPopup);
 }
 
 function handleDelete(evt) {
   evt.target.closest('.element').remove();
 }
-
 
 function handleOverlayClick (evt, popup) {
   if (evt.target === evt.currentTarget) {
@@ -140,5 +167,4 @@ setPopupListeners (addPopup);
 setPopupListeners (editPopup);
 setPopupListeners (photoPopup);
 
-render();
 
