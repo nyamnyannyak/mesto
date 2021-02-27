@@ -1,4 +1,6 @@
-import { Card } from './card.js'
+import { Card } from './card.js';
+import { initialCards } from './initial-cards.js';
+import { FormValidator } from './validate.js';
 
 const editButton = document.querySelector('.profile__edit-button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -13,27 +15,31 @@ const placeInput = addFormElement.querySelector('.popup__input_content_place');
 const urlInput = addFormElement.querySelector('.popup__input_content_url');
 const photoPopup = document.querySelector('.photo-popup');
 const elements = document.querySelector('.elements');
-const editPopupCloseButton = editPopup.querySelector('.popup__close-button');
 const addButton = document.querySelector('.profile__add-button');
-const addPopupCloseButton = addPopup.querySelector('.popup__close-button');
-const photoPopupCloseButton = photoPopup.querySelector('.close-button');
 const photoPopupImage = photoPopup.querySelector('.photo-popup__image');
 const photoPopupText = photoPopup.querySelector('.photo-popup__text');
-const createCardButton = addFormElement.querySelector('.popup__save-button');
-const profileSaveButton = profileFormElement.querySelector('.popup__save-button');
-const inactiveButtonSelector = 'popup__save-button_disabled';
 
+//настройки для валидации
+const formSelectors = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible',
+  };
+//создание классов валидации
+const addFormValidator = new FormValidator(formSelectors, addFormElement);
+const editFormValidator = new FormValidator(formSelectors, profileFormElement);
+
+//функция отрисовки карточек
 function renderElement(item) {
-  const card = new Card(item, '#element-template')
+  const card = new Card(item, '#element-template');
   const cardElement = card.generateCard();
-  
 	elements.prepend(cardElement); 
 }
 
-initialCards.forEach((item) => {
-  renderElement(item)
-});
-
+//логика работы попапов
 function closePopup (popup) {
   popup.classList.remove ('opened-popup');
   document.removeEventListener('keydown', handleEscPress);
@@ -55,25 +61,16 @@ function openEditPopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup (editPopup);
-  resetEditForm();
-}
-
-function resetEditForm () {
-  removeInputErrors (profileFormElement);
-  makeButtonActive (profileSaveButton, inactiveButtonSelector);
+  editFormValidator.enableValidation();
 }
 
 function openAddPopup () {
   openPopup(addPopup);
-  resetAddForm ();
-}
-
-function resetAddForm () {
-  removeInputErrors (addFormElement);
-  makeButtonDisabled (createCardButton, inactiveButtonSelector);
   addFormElement.reset();
+  addFormValidator.enableValidation()
 }
 
+//обработчики
 function handleEditFormSubmit (evt) {
     evt.preventDefault(); 
     profileName.textContent = nameInput.value;
@@ -116,5 +113,10 @@ addFormElement.addEventListener('submit', handleAddFormSubmit);
 setPopupListeners (addPopup);
 setPopupListeners (editPopup);
 setPopupListeners (photoPopup);
+
+//отрисовка карточек из массива
+initialCards.forEach((item) => {
+  renderElement(item);
+});
 
 
