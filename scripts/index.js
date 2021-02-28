@@ -61,12 +61,14 @@ function openEditPopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup (editPopup);
+  //вызываю валидацию формы
   editFormValidator.enableValidation();
 }
 
 function openAddPopup () {
   openPopup(addPopup);
   addFormElement.reset();
+  //вызываю валидацию формы
   addFormValidator.enableValidation()
 }
 
