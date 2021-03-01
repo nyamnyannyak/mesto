@@ -31,6 +31,10 @@ const formSelectors = {
 //создание классов валидации
 const addFormValidator = new FormValidator(formSelectors, addFormElement);
 const editFormValidator = new FormValidator(formSelectors, profileFormElement);
+//вызываю валидацию форм
+addFormValidator.enableValidation()
+editFormValidator.enableValidation();
+
 
 //функция отрисовки карточек
 function renderElement(item) {
@@ -61,15 +65,13 @@ function openEditPopup () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup (editPopup);
-  //вызываю валидацию формы
-  editFormValidator.enableValidation();
+  editFormValidator.resetFormState();
 }
 
 function openAddPopup () {
   openPopup(addPopup);
   addFormElement.reset();
-  //вызываю валидацию формы
-  addFormValidator.enableValidation()
+  addFormValidator.resetFormState();
 }
 
 //обработчики
@@ -98,7 +100,7 @@ function handleOverlayClick (evt, popup) {
 
 function handleEscPress (evt) {
     const openedPopup = document.querySelector('.opened-popup');
-    if (evt.keyCode === 27) {
+    if (evt.key === 'Escape') {
       closePopup (openedPopup);
     }
 }

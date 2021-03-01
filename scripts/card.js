@@ -1,10 +1,9 @@
 import { openPhotoPopup } from './index.js'
-
 export class Card {
 	constructor(data, cardSelector) {
     this._cardSelector = cardSelector;
     this._name = data.name;
-		this._link = data.link;
+    this._link = data.link;
 	}
 
   _getTemplate() {
@@ -20,9 +19,10 @@ export class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
 
-    this._element.querySelector('.element__image').src = this._link;
+    const elementImage = this._element.querySelector('.element__image');
+    elementImage.src = this._link;
+    elementImage.alt = `Фото "${this._name}"`;
     this._element.querySelector('.element__text').textContent = this._name;
-    this._element.querySelector('.element__image').alt = `Фото "${this._name}"`;
 
     return this._element;
   }
@@ -45,5 +45,6 @@ export class Card {
   
   _handleDelete() {
     this._element.remove();
+    this._element = null;
   }
 }

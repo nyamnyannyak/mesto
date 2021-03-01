@@ -60,23 +60,23 @@ export class FormValidator {
       });
     });
   }
-  
-  _resetFormState () {
-    this._toggleButtonState();
-    this._removeInputErrors();
-  }
 
   _removeInputErrors () {
     this._inputList.forEach((inputElement) => {
     this._hideInputError (inputElement);
     });
   }
+  
+  resetFormState () {
+    this._toggleButtonState();
+    this._removeInputErrors();
+  }
 
   enableValidation () {
     this._formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    this._resetFormState();
+    this.resetFormState();
     this._setEventListeners();
   }
 }
