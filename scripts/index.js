@@ -3,6 +3,9 @@ import { initialCards } from './initial-cards.js';
 import { FormValidator } from './validate.js';
 import Section from './section.js';
 import Popup from './popup.js';
+import PopupWithImage from './popupwithimage.js';
+import PopupWithForm from './popupwithform.js';
+import UserInfo from './userinfo.js';
 
 const editButton = document.querySelector('.profile__edit-button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -10,8 +13,8 @@ const addPopup = document.querySelector('.popup_type_add');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
 const profileFormElement = editPopup.querySelector('.popup__form');
-const nameInput = profileFormElement.querySelector('.popup__input_content_name');
-const jobInput = profileFormElement.querySelector('.popup__input_content_job');
+let nameInput = profileFormElement.querySelector('.popup__input_content_name');
+let jobInput = profileFormElement.querySelector('.popup__input_content_job');
 const addFormElement = addPopup.querySelector('.popup__form');
 const placeInput = addFormElement.querySelector('.popup__input_content_place');
 const urlInput = addFormElement.querySelector('.popup__input_content_url');
@@ -40,7 +43,14 @@ editFormValidator.enableValidation();
 const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, '#element-template');
+    const card = new Card(item, {
+      cardSelector: '#element-template',
+      handleCardClick: (name, link) => {
+        const photoPopup = new PopupWithImage('.photo-popup');
+        photoPopup.open(name, link);
+        photoPopup.setEventListeners();
+      }
+    });
     const cardElement = card.generateCard();
 
     cardsList.addItem(cardElement);
@@ -52,13 +62,22 @@ const cardsList = new Section({
 cardsList.renderItems();
 
 //логика работы попапов
+const info = new UserInfo ('.profile__name', '.profile__description');
+const popupWithEditForm = new PopupWithForm ({ 
+  popupSelector: '.popup_type_edit', 
+  handleFormSubmit: ({ name, job }) => {
+    info.setUserInfo({ name, job });
+    popupWithEditForm.close();
+  }
+})
+popupWithEditForm.setEventListeners();
 
+function handleEditButtonClick () {
+    const userInfo = info.getUserInfo();
+  nameInput.value = userInfo.name;
+  jobInput.value = userInfo.job;
+  popupWithEditForm.open();
 
-export function openPhotoPopup (name, link) {
-  photoPopupImage.src = link;
-  photoPopupImage.alt = name;
-  photoPopupText.textContent = name;
-  // openPopup (photoPopup);
 }
 
 // function openEditPopup () {
@@ -92,16 +111,9 @@ export function openPhotoPopup (name, link) {
 //   closePopup (addPopup);
 // }
 
-function openPopup(popupSelector) {
-  const openedPopup = new Popup(popupSelector);
-  openedPopup.setEventListeners();
-  openedPopup.open();
-}
-
-editButton.addEventListener('click', () => {
-  openPopup('.popup_type_edit')}); 
-addButton.addEventListener('click',  () => {
-  openPopup('.popup_type_edit')}); 
+editButton.addEventListener('click', handleEditButtonClick); 
+// addButton.addEventListener('click',  () => {
+//   openPopup('.popup_type_edit')}); 
 // profileFormElement.addEventListener('submit', handleEditFormSubmit);
 // addFormElement.addEventListener('submit', handleAddFormSubmit);
 
