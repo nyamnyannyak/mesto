@@ -14,4 +14,4 @@ export const formSelectors = {
   inactiveButtonClass: 'popup__save-button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_visible',
-  };
+};

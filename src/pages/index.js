@@ -6,7 +6,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import { initialCards } from '../utils/initial-cards.js';
-import { 
+import {
   profileFormElement,
   addFormElement,
   elements,
@@ -14,63 +14,62 @@ import {
   editButton,
   nameInput,
   jobInput,
-  formSelectors
+  formSelectors,
 } from '../utils/constants.js';
 
 //создание секции с карточками
-const cardsList = new Section({
-  items: initialCards,
-  renderer: renderer 
+const cardsList = new Section(
+  {
+    items: initialCards,
+    renderer: renderer,
   },
   elements
-)
+);
 // отрисовка карточек из массива
 cardsList.renderItems();
 
 //функция создания и отрисовки карточек
-function renderer (item) {
+function renderer(item) {
   const card = new Card(item, {
     cardSelector: '#element-template',
     handleCardClick: (name, link) => {
       photoPopup.open(name, link);
-    }
+    },
   });
   const cardElement = card.generateCard();
   cardsList.addItem(cardElement);
-  }
-
+}
 
 //валидация
 const addFormValidator = new FormValidator(formSelectors, addFormElement);
 const editFormValidator = new FormValidator(formSelectors, profileFormElement);
-addFormValidator.enableValidation()
+addFormValidator.enableValidation();
 editFormValidator.enableValidation();
 
 //попапы
 const photoPopup = new PopupWithImage('.photo-popup');
 photoPopup.setEventListeners();
 
-const info = new UserInfo ('.profile__name', '.profile__description');
-const popupWithEditForm = new PopupWithForm ({ 
-  popupSelector: '.popup_type_edit', 
+const info = new UserInfo('.profile__name', '.profile__description');
+const popupWithEditForm = new PopupWithForm({
+  popupSelector: '.popup_type_edit',
   handleFormSubmit: (data) => {
     info.setUserInfo(data);
     popupWithEditForm.close();
-  }
-})
+  },
+});
 popupWithEditForm.setEventListeners();
 
-const popupWithAddForm = new PopupWithForm ({ 
-  popupSelector: '.popup_type_add', 
+const popupWithAddForm = new PopupWithForm({
+  popupSelector: '.popup_type_add',
   handleFormSubmit: (item) => {
-      renderer(item);
-      popupWithAddForm.close();
-  }
-})
+    renderer(item);
+    popupWithAddForm.close();
+  },
+});
 popupWithAddForm.setEventListeners();
 
-
-function handleEditButtonClick () {
+function handleEditButtonClick() {
   const userInfo = info.getUserInfo();
   nameInput.value = userInfo.name;
   jobInput.value = userInfo.job;
@@ -78,14 +77,10 @@ function handleEditButtonClick () {
   editFormValidator.resetFormState();
 }
 
-function handleAddButtonClick () {
+function handleAddButtonClick() {
   popupWithAddForm.open();
   addFormValidator.resetFormState();
 }
 
-editButton.addEventListener('click', handleEditButtonClick); 
-addButton.addEventListener('click',  handleAddButtonClick); 
-
-
-
-
+editButton.addEventListener('click', handleEditButtonClick);
+addButton.addEventListener('click', handleAddButtonClick);

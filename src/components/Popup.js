@@ -20,7 +20,7 @@ export default class Popup {
     }
   }
 
-  _handleOverlayClick (evt) {
+  _handleOverlayClick(evt) {
     if (evt.target === evt.currentTarget) {
       this.close();
     }
@@ -30,6 +30,6 @@ export default class Popup {
     this._popup.addEventListener('click', this._handleOverlayClick.bind(this));
     this._popup.querySelector('.close-button').addEventListener('click', () => {
       this.close();
-    }); 
+    });
   }
 }
