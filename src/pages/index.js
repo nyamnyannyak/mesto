@@ -32,9 +32,7 @@ function renderer (item) {
   const card = new Card(item, {
     cardSelector: '#element-template',
     handleCardClick: (name, link) => {
-      const photoPopup = new PopupWithImage('.photo-popup');
       photoPopup.open(name, link);
-      photoPopup.setEventListeners();
     }
   });
   const cardElement = card.generateCard();
@@ -49,6 +47,9 @@ addFormValidator.enableValidation()
 editFormValidator.enableValidation();
 
 //попапы
+const photoPopup = new PopupWithImage('.photo-popup');
+photoPopup.setEventListeners();
+
 const info = new UserInfo ('.profile__name', '.profile__description');
 const popupWithEditForm = new PopupWithForm ({ 
   popupSelector: '.popup_type_edit', 
