@@ -5,7 +5,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-import { initialCards } from '../utils/initial-cards.js';
+import Api from '../components/Api.js'
 import {
   profileFormElement,
   addFormElement,
@@ -17,16 +17,23 @@ import {
   formSelectors,
 } from '../utils/constants.js';
 
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-21',
+  token: 'd181f887-3fb4-45a4-8654-0b7723224428',
+}); 
+
+api.getInitialCards()
+  .then((items) => {
+    cardsList.renderItems(items);
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  }); 
+
 //создание секции с карточками
-const cardsList = new Section(
-  {
-    items: initialCards,
-    renderer: renderer,
-  },
-  elements
-);
+const cardsList = new Section(renderer,elements);
 // отрисовка карточек из массива
-cardsList.renderItems();
+
 
 //функция создания и отрисовки карточек
 function renderer(item) {
@@ -50,7 +57,16 @@ editFormValidator.enableValidation();
 const photoPopup = new PopupWithImage('.photo-popup');
 photoPopup.setEventListeners();
 
-const info = new UserInfo('.profile__name', '.profile__description');
+const info = new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
+api.getUserInfo()
+  .then((data) => {
+    info.setUserInfo(data);
+    info.setAvatar(data);
+  })
+  .catch((err) => {
+    console.log(err); 
+  })
+
 const popupWithEditForm = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: (data) => {
@@ -72,7 +88,7 @@ popupWithAddForm.setEventListeners();
 function handleEditButtonClick() {
   const userInfo = info.getUserInfo();
   nameInput.value = userInfo.name;
-  jobInput.value = userInfo.job;
+  jobInput.value = userInfo.about;
   popupWithEditForm.open();
   editFormValidator.resetFormState();
 }
