@@ -24,11 +24,21 @@ const api = new Api({
 
 api.getInitialCards()
   .then((items) => {
+    sortCards (items);
     cardsList.renderItems(items);
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   }); 
+  
+function sortCards (cards) {
+  cards.sort(function(a, b){
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return dateA-dateB;
+  });
+}
+
 
 //создание секции с карточками
 const cardsList = new Section(renderer,elements);
@@ -37,11 +47,11 @@ const cardsList = new Section(renderer,elements);
 
 //функция создания и отрисовки карточек
 function renderer(item) {
-  const card = new Card(item, {
+  const card = new Card(item, api, {
     cardSelector: '#element-template',
     handleCardClick: (name, link) => {
       photoPopup.open(name, link);
-    },
+    }
   });
   const cardElement = card.generateCard();
   cardsList.addItem(cardElement);
@@ -69,18 +79,31 @@ api.getUserInfo()
 
 const popupWithEditForm = new PopupWithForm({
   popupSelector: '.popup_type_edit',
-  handleFormSubmit: (data) => {
-    info.setUserInfo(data);
-    popupWithEditForm.close();
+  handleFormSubmit: (formValues) => {
+    api.changeProfileInfo (formValues)
+      .then((userData) => {
+        info.setUserInfo(userData);
+        popupWithEditForm.close();
+      })
+      .catch((err) => {
+        console.log(err); 
+      })
   },
 });
 popupWithEditForm.setEventListeners();
 
 const popupWithAddForm = new PopupWithForm({
   popupSelector: '.popup_type_add',
-  handleFormSubmit: (item) => {
-    renderer(item);
-    popupWithAddForm.close();
+  handleFormSubmit: (formValues) => {
+    api.addCard(formValues)
+    .then((card) => {
+      renderer(card);
+      popupWithAddForm.close();
+    })
+    .catch((err) => {
+      console.log(err); 
+    })
+    
   },
 });
 popupWithAddForm.setEventListeners();
