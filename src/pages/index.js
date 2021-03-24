@@ -10,12 +10,14 @@ import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import {
   profileFormElement,
   addFormElement,
+  avatarFormElement,
   elements,
   addButton,
   editButton,
   nameInput,
   jobInput,
   formSelectors,
+  avatarEditIcon
 } from '../utils/constants.js';
 
 const api = new Api({
@@ -64,8 +66,10 @@ function renderer(item) {
 //валидация
 const addFormValidator = new FormValidator(formSelectors, addFormElement);
 const editFormValidator = new FormValidator(formSelectors, profileFormElement);
+const avatarFormValidator = new FormValidator(formSelectors, avatarFormElement);
 addFormValidator.enableValidation();
 editFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
 
 //попапы
 const photoPopup = new PopupWithImage('.photo-popup');
@@ -122,10 +126,24 @@ const popupWithAddForm = new PopupWithForm({
     .catch((err) => {
       console.log(err); 
     })
-    
   },
 });
 popupWithAddForm.setEventListeners();
+
+const popupWithAvatarForm = new PopupWithForm({
+  popupSelector: '.popup_type_avatar',
+  handleFormSubmit: (formValues) => {
+    api.changeAvatar(formValues)
+    .then((userData) => {
+      info.setAvatar(userData);
+      popupWithAvatarForm.close();
+    })
+    .catch((err) => {
+      console.log(err); 
+    })
+  },
+});
+popupWithAvatarForm.setEventListeners();
 
 function handleEditButtonClick() {
   const userInfo = info.getUserInfo();
@@ -140,5 +158,11 @@ function handleAddButtonClick() {
   addFormValidator.resetFormState();
 }
 
+function handleAvatarClick() {
+  popupWithAvatarForm.open();
+  avatarFormValidator.resetFormState();
+}
+
 editButton.addEventListener('click', handleEditButtonClick);
 addButton.addEventListener('click', handleAddButtonClick);
+avatarEditIcon.addEventListener('click', handleAvatarClick);

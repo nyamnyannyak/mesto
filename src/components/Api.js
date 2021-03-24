@@ -44,14 +44,17 @@ export default class Api {
       });
   }
   
-  changeProfileInfo (data) {
+  changeProfileInfo (formValues) {
     return fetch(`${this._url}/users/me`, {
-    method: 'PATCH',
-    headers: {
-    authorization: this._token,
-    'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+      method: 'PATCH',
+      headers: {
+      authorization: this._token,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: formValues.name,
+        about: formValues.about
+      })
     })
     .then(res => {
         if (res.ok) {
@@ -60,14 +63,17 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
-  addCard (data) {
+  addCard (formValues) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: {
       authorization: this._token,
       'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        name: formValues.name,
+        link: formValues.link
+      })
       })
       .then(res => {
           if (res.ok) {
@@ -116,8 +122,26 @@ export default class Api {
       }
     })
       .then(res => {
+          if (!res.ok) {
+            return Promise.reject(`Ошибка: ${res.status}`);
+          }
+        });
+  }
+
+  changeAvatar (formValues) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+      authorization: this._token,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: formValues.avatar
+      })
+    })
+      .then(res => {
           if (res.ok) {
-            return;
+            return res.json();
           }
           return Promise.reject(`Ошибка: ${res.status}`);
         });

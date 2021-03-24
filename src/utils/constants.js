@@ -1,10 +1,12 @@
 export const profileFormElement = document.querySelector('.popup_type_edit').querySelector('.popup__form');
 export const addFormElement = document.querySelector('.popup_type_add').querySelector('.popup__form');
+export const avatarFormElement = document.querySelector('.popup_type_avatar').querySelector('.popup__form');
 export const elements = '.elements';
 export const addButton = document.querySelector('.profile__add-button');
 export const editButton = document.querySelector('.profile__edit-button');
 export const nameInput = profileFormElement.querySelector('.popup__input_content_name');
 export const jobInput = profileFormElement.querySelector('.popup__input_content_job');
+export const avatarEditIcon = document.querySelector('.profile__avatar-wrapper');
 
 //настройки для валидации
 export const formSelectors = {

@@ -1,0 +1,30 @@
+.profile__avatar-wrapper {
+  position: relative;
+  margin-right: 30px;
+}
+.profile__avatar-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  cursor: pointer;
+  background-image: url('../../../images/pencil-icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 26px;
+}
+.profile__avatar-wrapper:hover::before {
+  opacity: 1;
+}
+
+@media screen and (max-width: 550px) {
+  .profile__avatar-wrapper {
+    margin-right: 0;
+    margin-bottom: 26px;
+  }
+}

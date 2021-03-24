@@ -77,10 +77,4 @@ export default class Card {
         console.log(err);
       })
   }
-
-  // handleDelete() {
-    //api.delete
-  //   this._element.remove();
-  //   this._element = null;
-  // }
 }
