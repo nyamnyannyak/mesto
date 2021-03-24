@@ -20,33 +20,43 @@ import {
   avatarEditIcon
 } from '../utils/constants.js';
 
+//создаем класс апи
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-21',
   token: 'd181f887-3fb4-45a4-8654-0b7723224428',
 }); 
 
-api.getInitialCards()
-  .then((items) => {
-    sortCards (items);
-    cardsList.renderItems(items);
+const info = new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
+//подгружаем информацию о пользователе
+api.getUserInfo()
+  .then((data) => {
+    info.setUserInfo(data);
+    info.setAvatar(data);
   })
   .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  }); 
-  
-function sortCards (cards) {
-  cards.sort(function(a, b){
-    const dateA = new Date(a.createdAt);
-    const dateB = new Date(b.createdAt);
-    return dateA-dateB;
-  });
-}
+    console.log(err); 
+  })
 
 
 //создание секции с карточками
 const cardsList = new Section(renderer,elements);
-// отрисовка карточек из массива
+// отрисовка карточек из массива и сортировка
+api.getInitialCards()
+.then((items) => {
+  sortCards (items);
+  cardsList.renderItems(items);
+})
+.catch((err) => {
+  console.log(err); 
+}); 
 
+function sortCards (cards) {
+cards.sort(function(a, b){
+  const dateA = new Date(a.createdAt);
+  const dateB = new Date(b.createdAt);
+  return dateA-dateB;
+});
+}
 
 //функция создания и отрисовки карточек
 function renderer(item) {
@@ -74,16 +84,6 @@ avatarFormValidator.enableValidation();
 //попапы
 const photoPopup = new PopupWithImage('.photo-popup');
 photoPopup.setEventListeners();
-
-const info = new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
-api.getUserInfo()
-  .then((data) => {
-    info.setUserInfo(data);
-    info.setAvatar(data);
-  })
-  .catch((err) => {
-    console.log(err); 
-  })
 
 const popupWithConfirm = new PopupWithConfirm ({
   popupSelector: '.popup_type_delete',
