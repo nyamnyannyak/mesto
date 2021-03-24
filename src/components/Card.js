@@ -37,35 +37,37 @@ export default class Card {
       this._handleCardClick(this._card.name, this._card.link);
     });
   }
-  
-  _showLikes () {
-    this._api.getCurrentUserId()
-    .then(userId => {
-      if (this._card.likes.some(elem => elem._id === userId)) {
-        this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
-      }
-    })
-    .catch((err) => console.log(err))
+
+  _showLikes() {
+    this._api
+      .getCurrentUserId()
+      .then((userId) => {
+        if (this._card.likes.some((elem) => elem._id === userId)) {
+          this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
-  _showDeleteIcon () {
-    this._api.getCurrentUserId()
-    .then(userId => {
-      if (this._card.owner._id === userId) {
-        this._element.querySelector('.element__delete-button').classList.remove('element__delete-button_disabled');
-      }
-    })
-    .catch((err) => console.log(err))
+  _showDeleteIcon() {
+    this._api
+      .getCurrentUserId()
+      .then((userId) => {
+        if (this._card.owner._id === userId) {
+          this._element.querySelector('.element__delete-button').classList.remove('element__delete-button_disabled');
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   _handleLikeClick() {
-    this._api.getCurrentUserId()
-      .then(userId => {
-        if (this._card.likes.some(elem => elem._id === userId)) {
-          return this._api.removeLike (this._card._id)
-            
+    this._api
+      .getCurrentUserId()
+      .then((userId) => {
+        if (this._card.likes.some((elem) => elem._id === userId)) {
+          return this._api.removeLike(this._card._id);
         } else {
-          return this._api.addLike (this._card._id)
+          return this._api.addLike(this._card._id);
         }
       })
       .then((data) => {
@@ -73,8 +75,8 @@ export default class Card {
         this._element.querySelector('.element__like-number').textContent = this._card.likes.length;
         this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
       })
-      .catch((err)=> {
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }
 }

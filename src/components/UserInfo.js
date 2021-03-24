@@ -4,7 +4,7 @@ export default class UserInfo {
     this._jobField = document.querySelector(profileJobSelector);
     this._avatar = document.querySelector(avatarSelector);
   }
-  setAvatar (data) {
+  setAvatar(data) {
     this._avatar.src = data.avatar;
   }
   getUserInfo() {
@@ -14,7 +14,7 @@ export default class UserInfo {
     };
     return userInfo;
   }
-  
+
   setUserInfo(data) {
     this._nameField.textContent = data.name;
     this._jobField.textContent = data.about;

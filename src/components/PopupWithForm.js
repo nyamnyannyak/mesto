@@ -26,12 +26,11 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  renderLoading (isLoading) {
+  renderLoading(isLoading) {
     if (isLoading) {
       this._saveButton.value = 'Сохранение...';
-    }
-    else {
-      this._saveButton.value = `${this._buttonText}`
+    } else {
+      this._saveButton.value = `${this._buttonText}`;
     }
   }
 
