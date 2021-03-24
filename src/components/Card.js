@@ -39,8 +39,7 @@ export default class Card {
   }
 
   _showLikes() {
-    this._api
-      .getCurrentUserId()
+    this._api.getCurrentUserId()
       .then((userId) => {
         if (this._card.likes.some((elem) => elem._id === userId)) {
           this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
@@ -50,8 +49,7 @@ export default class Card {
   }
 
   _showDeleteIcon() {
-    this._api
-      .getCurrentUserId()
+    this._api.getCurrentUserId()
       .then((userId) => {
         if (this._card.owner._id === userId) {
           this._element.querySelector('.element__delete-button').classList.remove('element__delete-button_disabled');
@@ -61,8 +59,7 @@ export default class Card {
   }
 
   _handleLikeClick() {
-    this._api
-      .getCurrentUserId()
+    this._api.getCurrentUserId()
       .then((userId) => {
         if (this._card.likes.some((elem) => elem._id === userId)) {
           return this._api.removeLike(this._card._id);
