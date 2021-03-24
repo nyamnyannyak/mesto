@@ -74,11 +74,21 @@
           <button class="photo-popup__close-button close-button"></button>
         </div>
       </section>
+      <section class="popup popup_type_delete">
+        <div class="popup__container">
+          <h2 class="popup__title popup__title_placed_delete-popup">Вы уверены?</h2>
+          <form class="popup__form" name="delete-form">
+            <input class="popup__save-button" type="submit" value="Да" name="save-button"> 
+          </form>
+          <button class="popup__close-button close-button" type="button"></button>
+        </div>
+      </section>
     </div>
+    
     <template id="element-template">
       <div class="elements__element element">
         <img class="element__image" src="data:," alt="Подпись к фото">
-        <button class="element__delete-button"></button>
+        <button class="element__delete-button element__delete-button_disabled"></button>
         <div class="element__bottom">
           <p class="element__text"></p>
           <div class="element__like">

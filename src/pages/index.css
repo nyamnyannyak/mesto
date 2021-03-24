@@ -45,3 +45,5 @@
 @import url('../blocks/close-button/close-button.css');
 @import url('../blocks/opened-popup/opened-popup.css');
 @import url('../blocks/element/__like-number/element__like-number.css');
+@import url('../blocks/popup/__title/placed/popup__title_placed_delete-popup.css');
+@import url('../blocks/element/__delete-button/_disabled/element__delete-button_disabled.css');
