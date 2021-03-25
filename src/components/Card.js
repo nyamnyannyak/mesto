@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(cardData, api, { cardSelector, handleCardClick, handleDeleteClick }) {
+  constructor(cardData, {api, userId, cardSelector, handleCardClick, handleDeleteClick }) {
     this._cardSelector = cardSelector;
     this._card = cardData;
     this._handleCardClick = handleCardClick;
     this._api = api;
+    this._userId = userId;
     this._handleDeleteClick = handleDeleteClick;
   }
 
@@ -39,34 +40,27 @@ export default class Card {
   }
 
   _showLikes() {
-    this._api.getCurrentUserId()
-      .then((userId) => {
-        if (this._card.likes.some((elem) => elem._id === userId)) {
-          this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
-        }
-      })
-      .catch((err) => console.log(err));
+    if (this._card.likes.some((elem) => elem._id === this._userId)) {
+      this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
+    }
   }
 
   _showDeleteIcon() {
-    this._api.getCurrentUserId()
-      .then((userId) => {
-        if (this._card.owner._id === userId) {
-          this._element.querySelector('.element__delete-button').classList.remove('element__delete-button_disabled');
-        }
-      })
-      .catch((err) => console.log(err));
+    if (this._card.owner._id === this._userId) {
+      this._element.querySelector('.element__delete-button').classList.remove('element__delete-button_disabled');
+    }
   }
 
+  _toggleLikeRequest() {
+    if (this._card.likes.some((elem) => elem._id === this._userId)) {
+      return this._api.removeLike(this._card._id);
+    } else {
+      return this._api.addLike(this._card._id);
+    }
+  }
+  
   _handleLikeClick() {
-    this._api.getCurrentUserId()
-      .then((userId) => {
-        if (this._card.likes.some((elem) => elem._id === userId)) {
-          return this._api.removeLike(this._card._id);
-        } else {
-          return this._api.addLike(this._card._id);
-        }
-      })
+    this._toggleLikeRequest() 
       .then((data) => {
         this._card = data;
         this._element.querySelector('.element__like-number').textContent = this._card.likes.length;

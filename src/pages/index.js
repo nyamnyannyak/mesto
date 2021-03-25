@@ -19,6 +19,7 @@ import {
   formSelectors,
   avatarEditIcon,
 } from '../utils/constants.js';
+let currentUserId;
 
 //создаем класс апи
 const api = new Api({
@@ -27,21 +28,14 @@ const api = new Api({
 });
 
 const info = new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
-//подгружаем информацию о пользователе
-api.getUserInfo()
-  .then((data) => {
-    info.setUserInfo(data);
-    info.setAvatar(data);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-//создание секции с карточками
 const cardsList = new Section(renderer, elements);
-// отрисовка карточек из массива и сортировка
-api.getInitialCards()
-  .then((items) => {
+
+//подругажаем информацию о пользователе и карточки
+Promise.all([api.getUserInfo(), api.getInitialCards()]) 
+  .then(([userData, items]) => {
+    currentUserId = userData._id;
+    info.setUserInfo(userData);
+    info.setAvatar(userData);
     sortCards(items);
     cardsList.renderItems(items);
   })
@@ -59,7 +53,9 @@ function sortCards(cards) {
 
 //функция создания и отрисовки карточек
 function renderer(item) {
-  const card = new Card(item, api, {
+  const card = new Card(item, {
+    api: api, 
+    userId: currentUserId,
     cardSelector: '#element-template',
     handleCardClick: (name, link) => {
       photoPopup.open(name, link);
